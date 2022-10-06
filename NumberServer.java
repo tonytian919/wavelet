@@ -7,17 +7,17 @@ class Handler implements URLHandler {
     int num = 0;
 
     public String handleRequest(URI url) {
-        if (url.getPath().equals("/")) {
-            return String.format("Number: %d", num);
-        } else if (url.getPath().equals("/increment")) {
-            num += 1;
-            return String.format("Number incremented!");
-        } else {
-            System.out.println("Path: " + url.getPath());
-            if (url.getPath().contains("/add")) {
-                String[] parameters = url.getQuery().split("=");
-                if (parameters[0].equals("count")) {
-                    num += Integer.parseInt(parameters[1]);
+        if (url.getPath().equals("/")) { //check if the path is /.
+            return String.format("Number: %d", num);//then shows Number: num's value
+        } else if (url.getPath().equals("/increment")) {// check if the path is /increment
+            num += 1;//if so add 1 to num's value.
+            return String.format("Number incremented!");//then shows Number incremented! on the screen.
+        } else {//in the cases other than the above 2 cases.
+            System.out.println("Path: " + url.getPath());//shows Path: the path we have.
+            if (url.getPath().contains("/add")) {//check if the path contains /add
+                String[] parameters = url.getQuery().split("=");//split the path at =.
+                if (parameters[0].equals("count")) {//check if the first parameter is count
+                    num += Integer.parseInt(parameters[1]);//add the number in the path to num.
                     return String.format("Number increased by %s! It's now %d", parameters[1], num);
                 }
             }
