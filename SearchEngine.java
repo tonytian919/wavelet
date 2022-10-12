@@ -4,8 +4,8 @@ import java.net.URI;
 class Handler implements URLHandler {
     // The one bit of state on the server: a number that will be manipulated by
     // various requests.
-    String[] ram = {"here"};
-
+    ArrayList<String>[] ram = new ArrayList<String>;
+    ram.add("Start");
     public String handleRequest(URI url) {
         if (url.getPath().equals("/")) { //check if the path is /.
             return String.format("String: %d", ram);//shows the value of ram
