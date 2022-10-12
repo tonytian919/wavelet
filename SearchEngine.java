@@ -4,21 +4,29 @@ import java.net.URI;
 class Handler implements URLHandler {
     // The one bit of state on the server: a number that will be manipulated by
     // various requests.
-    String ram = "here";
+    String[] ram = {"here"};
 
     public String handleRequest(URI url) {
         if (url.getPath().equals("/")) { //check if the path is /.
-            return String.format("String: %d", ram);//then shows Number: num's value
-        } else if (url.getPath().equals("/increment")) {// check if the path is /increment
-            num += 1;//if so add 1 to num's value.
-            return String.format("Number incremented!");//then shows Number incremented! on the screen.
-        } else {//in the cases other than the above 2 cases.
+            return String.format("String: %d", ram);//shows the value of ram
+        } else {//in the other cases
             System.out.println("Path: " + url.getPath());//shows Path: the path we have.
             if (url.getPath().contains("/add")) {//check if the path contains /add
-                String[] parameters = url.getQuery().split("=");//split the path at =.
-                if (parameters[0].equals("s")) {//check if the first parameter is count
-                    ram = ram + parameters[1];//add the number in the path to num.
-                    return String.format("Number increased by %s! It's now %d", parameters[1], s);
+                String[] parameters = url.getQuery().split("=");//split the query at =.
+                if (parameters[0].equals("s")) {//check if stuff at the beginning of query is count
+                    ram.add(parameters[1]);//add the String in the query to ram.
+                    return String.format("String added:%s! It's now %d", parameters[1], ram);
+                }
+            }else if (url.getPath().contains("/search")){
+                String[] parameters = url.getQuery().split("=");
+                if (parameters[0].equals("s")) {
+                    String[] check = new String[];
+                    for(int i = 0; i < ram.length ; i++) {
+                        if (ram[i].equals(parameters[1])) {
+                            check.add(ram[i]);
+                        }
+                    }
+                    return String.format("In the String:%s contains %d", check, parameters[1]);
                 }
             }
             return "404 Not Found!";
